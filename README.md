@@ -2,6 +2,20 @@
 
 <img src="Images/Partydonk.png" width="320" alt="Partydonk Logo" />
 
+This project is lays down foundational features and changes that we want to bring to .NET to support both deep learning workloads and scientific workloads that currently make the use of .NET obnoxious in this space.
+
+This draws both from capabilities that have been requested in the past, and both the implementations and designs that have been incorporated into other languages, notably Swift both as part of Google’s efforts with Swift for TensorFlow as well as Apple’s work on Swift Numerics that work in concert.
+
+These are the capabilities that we want to introduce into our runtimes and languages, a more detailed description follows this text.   These capabilities are generally designed to be framework neutral, and could be used with different deep learning and scientific libraries.
+
+
+- [Generic code over math operations](https://github.com/Partydonk/partydonk/issues/1)
+- [Automatic Differentiation](https://github.com/Partydonk/partydonk/issues/2)
+- [Python interoperability](https://github.com/Partydonk/partydonk/issues/3)
+- [Leveraging MLIR](https://github.com/Partydonk/partydonk/issues/4)
+- [Shape Checking](https://github.com/Partydonk/partydonk/issues/5)
+- [Automatic Reference Counting Base Type](https://github.com/Partydonk/partydonk/issues/6)
+
 ## Abstract Static Interface Members
 
 A prototype for supporting static members as part of an interface's contract,
