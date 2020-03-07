@@ -2,9 +2,13 @@
 
 <img src="Images/Partydonk.png" width="320" alt="Partydonk Logo" />
 
-This project is lays down foundational features and changes that we want to bring to .NET to support both deep learning workloads and scientific workloads that currently make the use of .NET obnoxious in this space.
+**For deep learning and scientific workloads, we want to make .NET both a natural fit and a delight to use.**
 
-This draws both from capabilities that have been requested in the past, and both the implementations and designs that have been incorporated into other languages, notably Swift both as part of Google’s efforts with Swift for TensorFlow as well as Apple’s work on Swift Numerics that work in concert.
+These are both growth areas with needs .NET is well placed to service. However; without changes, using .NET is difficult and not a first choice for these domains, and the high level of development friction does not bring joy for developers where .NET is currently their preferred platform. 
+
+*This project lays down foundational features and changes that we want to bring to .NET to support both deep learning workloads and scientific workloads to make it both a natural fit and a delight to use.*
+
+These proposals draw both from capabilities that have been requested in the past, and both the implementations and designs that have been incorporated into other languages, notably Swift both as part of Google’s efforts with Swift for TensorFlow as well as Apple’s work on Swift Numerics that work in concert.
 
 These are the capabilities that we want to introduce into our runtimes and languages, a more detailed description follows this text.   These capabilities are generally designed to be framework neutral, and could be used with different deep learning and scientific libraries.
 
