@@ -33,7 +33,10 @@ Changes are required to both the C# language and .NET runtimes:
 interface INumeric<TSelf> where TSelf : INumeric<TSelf>
 {
     abstract static TSelf Zero { get; }
+    abstract static TSelf operator -(TSelf a);
     abstract static TSelf operator +(TSelf a, TSelf b);
+    virtual static TSelf operator -(TSelf a, TSelf b)
+        => a + -b;
 }
 
 struct PartydonkReal : INumeric<PartydonkReal>
@@ -45,6 +48,9 @@ struct PartydonkReal : INumeric<PartydonkReal>
 
     public static PartydonkReal Zero { get; } = new PartydonkReal(0.0);
     
+    public static PartydonkReal operator -(PartydonkReal a)
+        => new PartydonkReal(-a.value);
+
     public static PartydonkReal operator +(PartydonkReal a, PartydonkReal b)
         => new PartydonkReal(a.value + b.value);
 }
@@ -56,6 +62,17 @@ static TNumeric Sum<TNumeric>(IEnumerable<TNumeric> numbers)
     foreach (var number in numbers)
         sum += number;
     return sum;
+}
+
+static IEnumerable<TNumeric> Differences<TNumeric>(IEnumerable<TNumeric> numbers)
+    where TNumeric : INumeric<TNumeric>
+{
+    var last = TNumeric.Zero;
+    foreach (var number in numbers)
+    {
+        yield return number - last;
+        last = number;
+    }
 }
 ```
 
