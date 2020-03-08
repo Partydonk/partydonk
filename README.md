@@ -30,13 +30,22 @@ Changes are required to both the C# language and .NET runtimes:
 ### Example
 
 ```csharp
+public interface IEquatable<T>
+{
+    bool Equals(T other);
+    // Implement IEquatable<TSelf>.Equals and get operators == and != for free.
+    virtual static bool operator ==(T left, T right) => left.Equals(right);
+    virtual static bool operator !=(T left, T right) => !(left == right);
+}
+
 interface INumeric<TSelf> where TSelf : INumeric<TSelf>
 {
     abstract static TSelf Zero { get; }
-    abstract static TSelf operator -(TSelf a);
     abstract static TSelf operator +(TSelf a, TSelf b);
-    virtual static TSelf operator -(TSelf a, TSelf b)
-        => a + -b;
+    // Implement negation operator.
+    abstract static TSelf operator -(TSelf a);
+    // Default subtraction operator is implemented as negation and add.
+    virtual static TSelf operator -(TSelf a, TSelf b) => a + -b;
 }
 
 struct PartydonkReal : INumeric<PartydonkReal>
