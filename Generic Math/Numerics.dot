@@ -1,0 +1,123 @@
+// Auto-generated from Numerics.dot on Mon Jun 29 16:31:08 EDT 2020
+// Do Not Edit - see Makefile
+//
+// Author:
+//   Aaron Bockover <abock@microsoft.com>
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+
+
+digraph {
+  rankdir = TB;
+  bgcolor = transparent;
+  stylesheet = "Numerics.dot.css";
+
+  edge [
+    dir = back;
+    color = "#505050";
+    arrowsize = 0.75;
+    penwidth = 1.5;
+  ];
+
+  node [
+    shape = box;
+    style = "filled, rounded";
+    fontname = "Helvetica-Bold";
+    fontsize = 12;
+  ];
+
+  subgraph System {
+    node [fillcolor="#FEF000"; color="#FFB900"];
+    IOperatorEquatable[label = <<TABLE BORDER="0"><TR><TD>IOperatorEquatable</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">== !=</FONT></TD></TR></TABLE>>];
+    IEquatable;
+    IOperatorComparable[label = <<TABLE BORDER="0"><TR><TD>IOperatorComparable</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">&lt; &lt;= &gt; &gt;</FONT></TD></TR></TABLE>>];
+    IComparable;
+  }
+
+  subgraph Integers {
+    node [fillcolor="#FF9349"; color="#D83B01"];
+    IBinaryInteger[label = <<TABLE BORDER="0"><TR><TD>IBinaryInteger</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">/ % ~ &amp; | ^ &lt;&lt; &gt;&gt;</FONT></TD></TR></TABLE>>];
+    IFixedWidthInteger[label = <<TABLE BORDER="0"><TR><TD>IFixedWidthInteger</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">BitWidth Min Max</FONT></TD></TR></TABLE>>];
+    IUnsignedInteger;
+    ISignedInteger;
+  };
+
+  subgraph FloatingPoint {
+    node [fillcolor="#50E6FF"; color="#0078D4"];
+    IExpressibleByFloatLiteral[label = <<TABLE BORDER="0"><TR><TD>IExpressibleByFloatLiteral</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">implicit TSelf(double)</FONT></TD></TR></TABLE>>];
+    IFloatingPoint[label = <<TABLE BORDER="0"><TR><TD>IFloatingPoint</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">/ % NaN PI Epsilon</FONT></TD></TR></TABLE>>];
+    IBinaryFloatingPoint[label = <<TABLE BORDER="0"><TR><TD>IBinaryFloatingPoint</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">ExponentBitCount SignificandBitCount</FONT></TD></TR></TABLE>>];
+  };
+
+  subgraph Numerics {
+		node [fillcolor="#D59DFF"; color="#8661C5"];
+    IReal;
+    IAlgebraicField[label = <<TABLE BORDER="0"><TR><TD>IAlgebraicField</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">/</FONT></TD></TR></TABLE>>];
+    IRealFunctions[label = <<TABLE BORDER="0"><TR><TD>IRealFunctions</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">atan2 hypot gamma log2 log10</FONT></TD></TR></TABLE>>];
+    IElementaryFunctions[label = <<TABLE BORDER="0"><TR><TD>IElementaryFunctions</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">exp a?(sin|cos|tan)h? pow sqrt</FONT></TD></TR></TABLE>>];
+  };
+
+  subgraph CoreNumerics {
+    node [fillcolor="#30E5D0"; color="#008575"];
+    IAdditiveArithmetic[label = <<TABLE BORDER="0"><TR><TD>IAdditiveArithmetic</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">Zero + -</FONT></TD></TR></TABLE>>];
+    IExpressibleByIntegerLiteral[label = <<TABLE BORDER="0"><TR><TD>IExpressibleByIntegerLiteral</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">implicit TSelf(int)</FONT></TD></TR></TABLE>>];
+    INumeric[label = <<TABLE BORDER="0"><TR><TD>INumeric</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">*</FONT></TD></TR></TABLE>>];
+    ISignedNumeric[label = <<TABLE BORDER="0"><TR><TD>ISignedNumeric</TD></TR><TR><TD><FONT POINT-SIZE="9" FACE="Menlo">unary -</FONT></TD></TR></TABLE>>];
+  };
+
+  subgraph Structs {
+    node [fillcolor="#9BF00B"; color="#107C10"];
+    rank = same;
+    Double[label="Single, Double"];
+    Int32[label="SByte, Int16, Int32, Int64"];
+    UInt32[label="Byte, UInt16, UInt32, UInt64"];
+  }
+
+  IOperatorEquatable -> IEquatable;
+  IOperatorComparable -> IComparable;
+  IAlgebraicField -> ISignedNumeric;
+  IReal -> {
+    IFloatingPoint,
+    IRealFunctions,
+    IAlgebraicField
+  };
+  IElementaryFunctions -> IAdditiveArithmetic;
+  IRealFunctions -> IElementaryFunctions;
+  IAdditiveArithmetic -> {
+    IOperatorEquatable,
+    IOperatorComparable
+  };
+  IExpressibleByIntegerLiteral;
+  INumeric -> {
+    IAdditiveArithmetic,
+    IExpressibleByIntegerLiteral
+  };
+  ISignedNumeric -> INumeric;
+  IBinaryInteger -> INumeric;
+  IFixedWidthInteger -> IBinaryInteger;
+  IUnsignedInteger -> IBinaryInteger;
+  ISignedInteger -> {
+    IBinaryInteger,
+    ISignedNumeric
+  };
+  IExpressibleByFloatLiteral;
+  IFloatingPoint -> ISignedNumeric;
+  IBinaryFloatingPoint -> {
+    IFloatingPoint,
+    IExpressibleByFloatLiteral
+  };
+  Double -> {
+    IBinaryFloatingPoint,
+    IReal
+  };
+  Int32 -> {
+    IFixedWidthInteger,
+    ISignedInteger
+  };
+  UInt32 -> {
+    IFixedWidthInteger,
+    IUnsignedInteger
+  };
+}

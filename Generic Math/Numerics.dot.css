@@ -1,0 +1,3 @@
+g text:not(:first-of-type) {
+  opacity: 60%;
+}
