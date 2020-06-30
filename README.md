@@ -30,10 +30,22 @@ Changes are required to both the C# language and .NET runtimes:
 ### Example
 
 ```csharp
+public interface IEquatable<T>
+{
+    bool Equals(T other);
+    // Implement IEquatable<TSelf>.Equals and get operators == and != for free.
+    virtual static bool operator ==(T left, T right) => left.Equals(right);
+    virtual static bool operator !=(T left, T right) => !(left == right);
+}
+
 interface INumeric<TSelf> where TSelf : INumeric<TSelf>
 {
     abstract static TSelf Zero { get; }
     abstract static TSelf operator +(TSelf a, TSelf b);
+    // Implement negation operator.
+    abstract static TSelf operator -(TSelf a);
+    // Default subtraction operator is implemented as negation and add.
+    virtual static TSelf operator -(TSelf a, TSelf b) => a + -b;
 }
 
 struct PartydonkReal : INumeric<PartydonkReal>
@@ -45,6 +57,9 @@ struct PartydonkReal : INumeric<PartydonkReal>
 
     public static PartydonkReal Zero { get; } = new PartydonkReal(0.0);
     
+    public static PartydonkReal operator -(PartydonkReal a)
+        => new PartydonkReal(-a.value);
+
     public static PartydonkReal operator +(PartydonkReal a, PartydonkReal b)
         => new PartydonkReal(a.value + b.value);
 }
@@ -56,6 +71,17 @@ static TNumeric Sum<TNumeric>(IEnumerable<TNumeric> numbers)
     foreach (var number in numbers)
         sum += number;
     return sum;
+}
+
+static IEnumerable<TNumeric> Differences<TNumeric>(IEnumerable<TNumeric> numbers)
+    where TNumeric : INumeric<TNumeric>
+{
+    var last = TNumeric.Zero;
+    foreach (var number in numbers)
+    {
+        yield return number - last;
+        last = number;
+    }
 }
 ```
 
